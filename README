@@ -1,0 +1,22 @@
+I created a computer agent to play Pentago. The agent runs primarily using MCTS with UCB2; however, numerous modifications were made to account for the large maximum branching factor of 288. First, depth-2 minimax was implemented to obtain a stronger initial list of 20 moves from the starting position to explore. The heuristic used in this minimax is 1 if it's a winning terminal position and 0 otherwise. During the tree search, I also put a cap on the branching factor that decreases geometrically over time. For example, at levels close to the starting node we might explore 10 children, and farther down the tree we may only explore 5 children (can tune these parameters). 
+
+While running the test script, the java files are compiled and the makefile is built automatically. The executable is EnhancedMCTS. There is both an interactive version and a version used to run the tests in the script. In the interactive version, you can 1) play in a pass-and-play type of style with two human players, 2) play the minimax+MCTS computer agent, or 3) watch the computer play a game against a random agent. I personally have not yet been able to beat the computer agent, and I have been playing this game for a long time. To run the interactive version, enter ./EnhancedMCTS with no arguments. Upon entering the cmd, the program will output instructions explaining how to use it. The default time for a computer move in the interactive version is 20 seconds.
+
+I run the following tests in the test script (the results are from one iteration of the script):
+
+./EnhancedMCTS random W .5 100 (result: 1.0)
+./EnhancedMCTS random B .5 100 (result: 1.0)
+./EnhancedMCTS minimax W 1 30 (result: .7)
+./EnhancedMCTS minimax B 1 30 (result: .62)
+./EnhancedMCTS mcts W .5 30 (result: .97)
+./EnhancedMCTS mcts B .5 30 (result: .87)
+./EnhancedMCTS time W 2 20 .5 (result: .55)
+./EnhancedMCTS time B 2 20 .5 (result: .65)
+
+The result is the winning percentage of the computer agent. The 2nd argument indicates whether the agent is white or black, the 3rd argument specifies how long the agent has to run MCTS, and the 4th argument specifies how many games to play. There is a significant advantage given to the white player (Pentago is strongly-solved with white player wins). The "random" argument means the agent plays an agent making random moves. The "minimax" argument means the agent plays an agent that performs depth-2 minimax. The "mcts" argument means the agent plays an agent that performs standard mcts without the minimax and breadth-limiting optimizations. The "time" argument means the agent plays an agent that is the same, although it runs MCTS for a smaller amount of time (specified as the fifth argument).
+
+The test script terminates in ~45 minutes.
+
+END OF README
+---------------------------------------
+
